@@ -21,12 +21,12 @@ public static class StudentsEndpoints
       if (exists) return Results.Conflict("Student already exists.");
 
       var newStudent = new Student(request.Name);
-      // adds new student to db, works like a list
-      await context.Students.AddAsync(newStudent);
-      // only saves on db after this line
-      await context.SaveChangesAsync();
+      await context.Students.AddAsync(newStudent); // adds new student to db, works like a list
+      await context.SaveChangesAsync(); // only saves on db after this line
 
-      return Results.Ok(newStudent);
+      var studentDTO = new StudentDTO(newStudent.Id, newStudent.Name);
+
+      return Results.Ok(studentDTO);
     });
 
     // GET - all active students
@@ -35,6 +35,7 @@ public static class StudentsEndpoints
       var students = await context
               .Students
               .Where(student => student.Active) // list filter to sql query filter (very clever lol)
+              .Select(student => new StudentDTO(student.Id, student.Name))
               .ToListAsync();
 
       return students;
@@ -52,7 +53,7 @@ public static class StudentsEndpoints
       student.UpdateName(request.Name);
 
       await context.SaveChangesAsync();
-      return Results.Ok(student);
+      return Results.Ok(new StudentDTO(student.Id, student.Name));
     });
   }
 }
