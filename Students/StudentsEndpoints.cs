@@ -28,5 +28,15 @@ public static class StudentsEndpoints
 
       return Results.Ok(newStudent);
     });
+
+    StudentsRoutes.MapGet("", async (AppDbContext context) =>
+    {
+      var students = await context
+              .Students
+              .Where(student => student.Active) // list filter to sql query filter (very clever lol)
+              .ToListAsync();
+
+      return students;
+    });
   }
 }
