@@ -1,29 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ddmpn\\coding\\dotnet\\SimpleAPI\\SimpleAPI.csproj": {}
+    "C:\\Users\\ddmpn\\Coding\\dotnet\\SimpleAPI\\SimpleAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ddmpn\\coding\\dotnet\\SimpleAPI\\SimpleAPI.csproj": {
+    "C:\\Users\\ddmpn\\Coding\\dotnet\\SimpleAPI\\SimpleAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ddmpn\\coding\\dotnet\\SimpleAPI\\SimpleAPI.csproj",
+        "projectUniqueName": "C:\\Users\\ddmpn\\Coding\\dotnet\\SimpleAPI\\SimpleAPI.csproj",
         "projectName": "SimpleAPI",
-        "projectPath": "C:\\Users\\ddmpn\\coding\\dotnet\\SimpleAPI\\SimpleAPI.csproj",
+        "projectPath": "C:\\Users\\ddmpn\\Coding\\dotnet\\SimpleAPI\\SimpleAPI.csproj",
         "packagesPath": "C:\\Users\\ddmpn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ddmpn\\coding\\dotnet\\SimpleAPI\\obj\\",
+        "outputPath": "C:\\Users\\ddmpn\\Coding\\dotnet\\SimpleAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\ddmpn\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -51,6 +53,20 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.7, )"
             }
           },
           "imports": [
@@ -72,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
