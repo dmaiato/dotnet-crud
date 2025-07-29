@@ -19,4 +19,9 @@ public class Student
   {
     Name = name;
   }
+
+  public void Deactivate()
+  {
+    Active = false;
+  }
 }

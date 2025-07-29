@@ -13,21 +13,21 @@ public static class StudentsEndpoints
     // POST - create new student
     StudentsRoutes.MapPost("",
       async (AddStudentRequest request, AppDbContext context) =>
-    {
-      var exists = await context.Students.AnyAsync(
-        student => student.Name == request.Name
-      );
+      {
+        var exists = await context.Students.AnyAsync(
+          student => student.Name == request.Name
+        );
 
-      if (exists) return Results.Conflict("Student already exists.");
+        if (exists) return Results.Conflict("Student already exists.");
 
-      var newStudent = new Student(request.Name);
-      await context.Students.AddAsync(newStudent); // adds new student to db, works like a list
-      await context.SaveChangesAsync(); // only saves on db after this line
+        var newStudent = new Student(request.Name);
+        await context.Students.AddAsync(newStudent); // adds new student to db, works like a list
+        await context.SaveChangesAsync(); // only saves on db after this line
 
-      var studentDTO = new StudentDTO(newStudent.Id, newStudent.Name);
+        var studentDTO = new StudentDTO(newStudent.Id, newStudent.Name);
 
-      return Results.Ok(studentDTO);
-    });
+        return Results.Ok(studentDTO);
+      });
 
     // GET - all active students
     StudentsRoutes.MapGet("", async (AppDbContext context) =>
@@ -44,16 +44,31 @@ public static class StudentsEndpoints
     // PUT - update student name
     StudentsRoutes.MapPut("{id:guid}",
       async (Guid id, UpdateStudentRequest request, AppDbContext context) =>
-    {
-      var student = await context.Students
-        .SingleOrDefaultAsync(student => student.Id == id);
+      {
+        var student = await context.Students
+          .SingleOrDefaultAsync(student => student.Id == id);
 
-      if (student == null) return Results.NotFound();
+        if (student == null) return Results.NotFound();
 
-      student.UpdateName(request.Name);
+        student.UpdateName(request.Name);
 
-      await context.SaveChangesAsync();
-      return Results.Ok(new StudentDTO(student.Id, student.Name));
-    });
+        await context.SaveChangesAsync();
+        return Results.Ok(new StudentDTO(student.Id, student.Name));
+      });
+
+    // DELETE - soft deleting, as in deactivating student
+    StudentsRoutes.MapDelete("{id:guid}",
+      async (Guid id, AppDbContext context) =>
+      {
+        var student = await context
+          .Students.SingleOrDefaultAsync(student => student.Id == id);
+
+        if (student == null) return Results.NotFound();
+
+        student.Deactivate();
+
+        await context.SaveChangesAsync();
+        return Results.Ok();
+      });
   }
 }
