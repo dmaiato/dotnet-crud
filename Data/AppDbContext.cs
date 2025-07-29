@@ -5,11 +5,17 @@ namespace SimpleAPI.Data;
 
 public class AppDbContext : DbContext
 {
-  private DbSet<Student> Students { get; set; }
+  public DbSet<Student> Students { get; set; }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     optionsBuilder.UseSqlite("Data Source=Database.sqlite");
+    optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
+
+    // enables param data to be shown on console logging
+    // only use while testing.
+    // optionsBuilder.EnableSensitiveDataLogging();
+
     base.OnConfiguring(optionsBuilder);
   }
 }

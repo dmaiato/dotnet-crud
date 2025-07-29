@@ -1,10 +1,32 @@
+using Microsoft.EntityFrameworkCore;
+using SimpleAPI.Data;
+
 namespace SimpleAPI.Students;
 
 public static class StudentsEndpoints
 {
   public static void AddStudentsEndpoints(this WebApplication app)
   {
-    // app.MapGet("students", () => "Hello Students" );
-    app.MapGet("students", () => new Student("David") );
+    // route group simplification
+    var StudentsRoutes = app.MapGroup("students");
+
+    // creating user (POST)
+    StudentsRoutes.MapPost("",
+      async (AddStudentRequest request, AppDbContext context) =>
+    {
+      var exists = await context.Students.AnyAsync(
+        student => student.Name == request.Name
+      );
+
+      if (exists) return Results.Conflict("Student already exists.");
+
+      var newStudent = new Student(request.Name);
+      // adds new student to db, works like a list
+      await context.Students.AddAsync(newStudent);
+      // only saves on db after this line
+      await context.SaveChangesAsync();
+
+      return Results.Ok(newStudent);
+    });
   }
 }
